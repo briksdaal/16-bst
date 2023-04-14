@@ -32,7 +32,7 @@ class Tree {
     if (node.right !== null) {
       Tree.prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
     }
-    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
+    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
     if (node.left !== null) {
       Tree.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
