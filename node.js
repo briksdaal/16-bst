@@ -1,6 +1,6 @@
 class Node {
   constructor(data) {
-    this.data = data || null;
+    this.data = data === undefined ? null : data;
     this.left = null;
     this.right = null;
   }
