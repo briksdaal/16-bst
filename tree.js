@@ -5,6 +5,26 @@ class Tree {
     this.root = Tree.buildTree(arr);
   }
 
+  static buildTree(arr) {
+    const sortedNoDuplicatesArr = Array.from(new Set(arr)).sort((a, b) => a - b);
+    return Tree.buildTreeAux(sortedNoDuplicatesArr, 0, sortedNoDuplicatesArr.length - 1);
+  }
+
+  static buildTreeAux(arr, start, end) {
+    if (start > end) {
+      return null;
+    }
+
+    const mid = Math.floor((end + start) / 2);
+
+    const node = new Node(arr[mid]);
+
+    node.left = Tree.buildTreeAux(arr, start, mid - 1);
+    node.right = Tree.buildTreeAux(arr, mid + 1, end);
+
+    return node;
+  }
+
   insert(value) {
     const newNode = new Node(value);
 
@@ -103,24 +123,20 @@ class Tree {
     }
   }
 
-  static buildTree(arr) {
-    const sortedNoDuplicatesArr = Array.from(new Set(arr)).sort((a, b) => a - b);
-    return Tree.buildTreeAux(sortedNoDuplicatesArr, 0, sortedNoDuplicatesArr.length - 1);
-  }
+  find(value) {
+    let current = this.root;
 
-  static buildTreeAux(arr, start, end) {
-    if (start > end) {
-      return null;
+    while (current !== null) {
+      if (current.data > value) {
+        current = current.left;
+      } else if (current.data < value) {
+        current = current.right;
+      } else {
+        return current;
+      }
     }
-
-    const mid = Math.floor((end + start) / 2);
-
-    const node = new Node(arr[mid]);
-
-    node.left = Tree.buildTreeAux(arr, start, mid - 1);
-    node.right = Tree.buildTreeAux(arr, mid + 1, end);
-
-    return node;
+    // return null if not found
+    return current;
   }
 
   static prettyPrint(node, prefix = '', isLeft = true) {
@@ -142,11 +158,6 @@ const arr3 = [15, 3, 2, 1, 5, 13, 4, 10, 11, 7, 8, 14, 14, 14, 9, 6, 12];
 const arr4 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arr5 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = new Tree(arr3);
-Tree.prettyPrint(tree.root);
 tree.delete(14);
-// tree.delete(324);
-// tree.delete(6345);
-// tree.delete(1);
-// tree.delete(3);
-
 Tree.prettyPrint(tree.root);
+console.log(tree.find(13));
