@@ -227,6 +227,14 @@ class Tree {
     ];
   }
 
+  height(node) {
+    if (node === null) {
+      return -1;
+    }
+
+    return 1 + Math.max(this.height(node.left), this.height(node.right));
+  }
+
   static prettyPrint(node, prefix = '', isLeft = true) {
     if (node === null) {
       return;
@@ -249,4 +257,4 @@ const tree = new Tree(arr3);
 tree.delete(14);
 tree.insert(7.5);
 Tree.prettyPrint(tree.root);
-console.log(tree.postorder());
+console.log(tree.height(tree.find(12)));
