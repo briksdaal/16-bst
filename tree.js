@@ -39,7 +39,7 @@ class Tree {
 
     while (current !== null) {
       if (current.data === value) {
-        console.log('Duplicate identified - not added');
+        console.log(`Duplicate identified - ${value} - not added`);
         return;
       }
       prev = current;
@@ -143,6 +143,11 @@ class Tree {
   levelOrder(cb) {
     const levelOrderArray = [];
     let current = this.root;
+
+    if (current === null) {
+      return levelOrderArray;
+    }
+
     const queue = new Queue();
 
     queue.enqueue(current);
@@ -285,17 +290,5 @@ class Tree {
     }
   }
 }
-const arr1 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const arr2 = [];
-const arr3 = [15, 3, 2, 1, 5, 13, 4, 10, 11, 7, 8, 14, 14, 14, 9, 6, 12];
-const arr4 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const arr5 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const tree = new Tree(arr3);
-tree.delete(14);
-tree.insert(7.5);
-tree.delete(13);
-tree.delete(4);
-Tree.prettyPrint(tree.root);
-tree.rebalance();
-Tree.prettyPrint(tree.root);
-console.log(tree.isBalanced());
+
+export default Tree;
