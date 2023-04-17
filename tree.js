@@ -255,6 +255,23 @@ class Tree {
     return current === node ? nodeDepth : null;
   }
 
+  isBalanced(node = this.root) {
+    if (node === null) {
+      return true;
+    }
+
+    if (Math.abs(this.height(node.left) - this.height(node.right)) > 1) {
+      return false;
+    }
+
+    return this.isBalanced(node.left) && this.isBalanced(node.right);
+  }
+
+  rebalance() {
+    const sortedArrayofNodes = this.inorder();
+    this.root = Tree.buildTreeAux(sortedArrayofNodes, 0, sortedArrayofNodes.length - 1);
+  }
+
   static prettyPrint(node, prefix = '', isLeft = true) {
     if (node === null) {
       return;
@@ -276,12 +293,9 @@ const arr5 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = new Tree(arr3);
 tree.delete(14);
 tree.insert(7.5);
+tree.delete(13);
+tree.delete(4);
 Tree.prettyPrint(tree.root);
-console.log(tree.depth(tree.find(8)));
-console.log(tree.depth(tree.find(4)));
-console.log(tree.depth(tree.find(6)));
-console.log(tree.depth(tree.find(7)));
-console.log(tree.depth(tree.find(7.5)));
-console.log(tree.depth(tree.find(3)));
-console.log(tree.depth(tree.find(-100)));
-console.log(tree.depth(new Node(-100)));
+tree.rebalance();
+Tree.prettyPrint(tree.root);
+console.log(tree.isBalanced());
