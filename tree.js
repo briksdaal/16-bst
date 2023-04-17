@@ -57,8 +57,8 @@ class Tree {
     }
   }
 
-  delete(value) {
-    this.deleteAux(value, this.root);
+  delete(value, root = this.root) {
+    this.deleteAux(value, root);
   }
 
   deleteAux(value, root) {
