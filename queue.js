@@ -30,7 +30,7 @@ class Queue {
 
     this.head = this.head.next;
 
-    return nodeToReturn;
+    return nodeToReturn.data;
   }
 
   isEmpty() {

@@ -1,4 +1,5 @@
 import Node from './node.js';
+import Queue from './queue.js';
 
 class Tree {
   constructor(arr) {
@@ -140,22 +141,36 @@ class Tree {
   }
 
   levelOrder(cb) {
-    return this.root;
-  }
+    const levelOrderArray = [];
+    let current = this.root;
+    const queue = new Queue();
 
-  static prettyPrint(node, prefix = '', isLeft = true) {
-    if (node === null) {
-      return;
+    queue.enqueue(current);
+
+    while (!queue.isEmpty()) {
+      current = queue.dequeue();
+
+      if (current.left !== null) {
+        queue.enqueue(current.left);
+      }
+      if (current.right !== null) {
+        queue.enqueue(current.right);
+      }
+
+      if (cb) {
+        cb(current.data);
+      } else {
+        levelOrderArray.push(current.data);
+      }
     }
-    if (node.right !== null) {
-      Tree.prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+
+    if (!cb) {
+      return levelOrderArray;
     }
-    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-    if (node.left !== null) {
-      Tree.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-    }
+    return undefined;
   }
 }
+
 const arr1 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arr2 = [];
 const arr3 = [15, 3, 2, 1, 5, 13, 4, 10, 11, 7, 8, 14, 14, 14, 9, 6, 12];
@@ -163,5 +178,5 @@ const arr4 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arr5 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = new Tree(arr3);
 tree.delete(14);
+tree.insert(7.5);
 Tree.prettyPrint(tree.root);
-console.log(tree.levelOrder());
