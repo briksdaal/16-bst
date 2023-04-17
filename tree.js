@@ -169,8 +169,77 @@ class Tree {
     }
     return undefined;
   }
-}
 
+  inorder(cb, current = this.root) {
+    if (current === null) {
+      return [];
+    }
+
+    if (cb) {
+      this.inorder(cb, current.left);
+      cb(current.data);
+      this.inorder(cb, current.right);
+      return null;
+    }
+
+    return [
+      ...this.inorder(cb, current.left),
+      current.data,
+      ...this.inorder(cb, current.right),
+    ];
+  }
+
+  preorder(cb, current = this.root) {
+    if (current === null) {
+      return [];
+    }
+
+    if (cb) {
+      cb(current.data);
+      this.preorder(cb, current.left);
+      this.preorder(cb, current.right);
+      return null;
+    }
+
+    return [
+      current.data,
+      ...this.preorder(cb, current.left),
+      ...this.preorder(cb, current.right),
+    ];
+  }
+
+  postorder(cb, current = this.root) {
+    if (current === null) {
+      return [];
+    }
+
+    if (cb) {
+      this.postorder(cb, current.left);
+      this.postorder(cb, current.right);
+      cb(current.data);
+      return null;
+    }
+
+    return [
+      ...this.postorder(cb, current.left),
+      ...this.postorder(cb, current.right),
+      current.data,
+    ];
+  }
+
+  static prettyPrint(node, prefix = '', isLeft = true) {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      Tree.prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+    }
+    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+    if (node.left !== null) {
+      Tree.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    }
+  }
+}
 const arr1 = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arr2 = [];
 const arr3 = [15, 3, 2, 1, 5, 13, 4, 10, 11, 7, 8, 14, 14, 14, 9, 6, 12];
@@ -180,3 +249,4 @@ const tree = new Tree(arr3);
 tree.delete(14);
 tree.insert(7.5);
 Tree.prettyPrint(tree.root);
+console.log(tree.postorder());

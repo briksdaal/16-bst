@@ -1,9 +1,3 @@
-import printBST from './bst.js';
-import printNode from './node.js';
-
-printBST();
-printNode();
-
 // Write a simple driver script that does the following:
 // 1. Create a binary search tree from an array of random numbers.
 // You can create a function that returns an array of random numbers
