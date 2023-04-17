@@ -235,6 +235,26 @@ class Tree {
     return 1 + Math.max(this.height(node.left), this.height(node.right));
   }
 
+  depth(node) {
+    if (!node) {
+      return null;
+    }
+
+    let current = this.root;
+    let nodeDepth = 0;
+
+    while (current !== node && current !== null) {
+      nodeDepth += 1;
+      if (current.data > node.data) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+
+    return current === node ? nodeDepth : null;
+  }
+
   static prettyPrint(node, prefix = '', isLeft = true) {
     if (node === null) {
       return;
@@ -257,4 +277,11 @@ const tree = new Tree(arr3);
 tree.delete(14);
 tree.insert(7.5);
 Tree.prettyPrint(tree.root);
-console.log(tree.height(tree.find(12)));
+console.log(tree.depth(tree.find(8)));
+console.log(tree.depth(tree.find(4)));
+console.log(tree.depth(tree.find(6)));
+console.log(tree.depth(tree.find(7)));
+console.log(tree.depth(tree.find(7.5)));
+console.log(tree.depth(tree.find(3)));
+console.log(tree.depth(tree.find(-100)));
+console.log(tree.depth(new Node(-100)));
