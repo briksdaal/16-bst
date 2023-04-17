@@ -172,7 +172,7 @@ class Tree {
     if (!cb) {
       return levelOrderArray;
     }
-    return undefined;
+    return null;
   }
 
   inorder(cb, current = this.root) {
